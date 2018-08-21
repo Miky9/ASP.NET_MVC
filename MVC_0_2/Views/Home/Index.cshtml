@@ -1,0 +1,67 @@
+﻿@model MVC_0_2.Models.Calculator  //binding to model Calculator
+
+@{
+    ViewData["Title"] = "Calculator";
+}
+
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
+    @*<h2>Index</h2>*@
+
+    <h2>
+        Calculator
+        @if (ViewBag.Name != null)
+        {
+            <text> for @ViewBag.Name</text>
+        }
+    </h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Index">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Number1" class="control-label"></label>
+                    <input asp-for="Number1" class="form-control" />
+                    <span asp-validation-for="Number1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Number2" class="control-label"></label>
+                    <input asp-for="Number2" class="form-control" />
+                    <span asp-validation-for="Number2" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label asp-for="Result" class="control-label"></label>
+                    <input asp-for="Result" class="form-control" />
+                    <span asp-validation-for="Result" class="text-danger"></span>
+                </div>*@
+                <div class="form-group">
+                    <label asp-for="Operation" class="control-label"></label>
+                    @*<input asp-for="Operation" class="form-control" />*@
+                    <br />
+                    @Html.DropDownListFor(model => model.Operation, new SelectList(Model.PossibleOperations, "Value", "Text"))
+                    <span asp-validation-for="Operation" class="text-danger"></span>
+                </div>
+                    <br />
+                <div class="form-group">
+                    <input type="submit" value="Calculate" class="btn btn-default" />
+                </div>
+
+                <p style="font-size: 2em;">@Model.Result</p>
+
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Reset</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+</body>
